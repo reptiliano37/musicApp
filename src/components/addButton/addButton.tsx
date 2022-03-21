@@ -8,7 +8,7 @@ type ButtonProps = {
     loading?: boolean;
 } & TouchableOpacityProps;
 
-export default function ButtonComponent({ title, style, loading, ...props }: ButtonProps): ReactElement {
+export default function AddButton({ title, style, loading, ...props }: ButtonProps): ReactElement {
     // console.log(loading)
     return (
         
