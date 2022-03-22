@@ -3,7 +3,7 @@ import {
     DrawerItemList,
     DrawerItem
   } from '@react-navigation/drawer';
-  import React, { useState } from 'react';
+  import React, { ReactElement, useState } from 'react';
   import { View, Text, Alert, TouchableOpacity,Button,Image } from 'react-native';
   import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
   import {
@@ -68,7 +68,7 @@ import Home from '../home/home';
               size={size}
               />
           )}
-            label="Cerrar Sesión"
+            label="Exit"
             // loading={signingOut}
             onPress={async ()=>{
               let message = "Do you want to exit?"
@@ -78,7 +78,7 @@ import Home from '../home/home';
                                                 { text: "OK", onPress: () => navigation.goBack(Home) },
                                                 { text: "Cancel", onPress: () => navigation.goBack(Home) }
                                               ])
-              navigation.navigate("SignInScreen")
+              navigation.navigate("WelcomeScren")
             }}/>
             </Drawer.Section>
       </View>
