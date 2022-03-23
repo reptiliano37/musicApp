@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { View, Text, Alert, TouchableOpacity,Button,Image, ScrollViewBase, ScrollView, SafeAreaView } from 'react-native';
 import styles from './welcomeScreen.styles'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackNavigatorParams} from '../../config/navigator'
+import {DrawerNavigatorParams} from '../../config/DrawerNavigator'
 import { LinearGradient } from 'expo-linear-gradient';
 import AddButton from '../../components/addButton/addButton'
 import { Title,Divider } from 'react-native-paper';
@@ -12,7 +12,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 type WelcomeScreenProps = {
-    navigation: NativeStackNavigationProp<StackNavigatorParams, "WelcomeScreen">
+    navigation: NativeStackNavigationProp<DrawerNavigatorParams, "WelcomeScreen">
   }
 let infoAlbum =
   {

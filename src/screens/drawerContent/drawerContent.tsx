@@ -4,7 +4,7 @@ import {
     DrawerItem
   } from '@react-navigation/drawer';
   import React, { ReactElement, useState } from 'react';
-  import { View, Text, Alert, TouchableOpacity,Button,Image } from 'react-native';
+  import { View, Text, Alert, TouchableOpacity,Button,Image, ScrollView, ScrollViewProps } from 'react-native';
   import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
   import {
     useTheme,
@@ -18,8 +18,11 @@ import {
 } from 'react-native-paper';
 import styles from './drawerContent.styles'
 import Home from '../home/home';
+import WelcomeScreen from '../welcomeScreen/welcomeScreen';
+import { DrawerNavigationHelpers, DrawerDescriptorMap } from '@react-navigation/drawer/lib/typescript/src/types';
+import { DrawerNavigationState, ParamListBase } from '@react-navigation/native';
 
- export default function CustomDrawerContent(props, {navigation}) {
+ export default function CustomDrawerContent(props: any) {
     const [signingOut, setSigningOut] = useState(false);
     return (
       <View style={{flex:1}}>
@@ -42,19 +45,7 @@ import Home from '../home/home';
             </View>
             </Drawer.Section>
             <DrawerItemList {...props} />
-          
           <Drawer.Section style={styles.drawerSection}>
-            {/* <DrawerItem 
-                icon={({color, size}) => (
-                    <Icon 
-                    name="home-outline" 
-                    color={color}
-                    size={size}
-                    />
-                )}
-                label="Home"
-                onPress={() => {props.navigation.navigate('Home')}}
-            /> */}
             </Drawer.Section>
         </View>
       </DrawerContentScrollView>
@@ -71,14 +62,7 @@ import Home from '../home/home';
             label="Exit"
             // loading={signingOut}
             onPress={async ()=>{
-              let message = "Do you want to exit?"
-              Alert.alert("PISTA RESERVADA",
-                                              message, 
-                                              [
-                                                { text: "OK", onPress: () => navigation.goBack(Home) },
-                                                { text: "Cancel", onPress: () => navigation.goBack(Home) }
-                                              ])
-              navigation.navigate("WelcomeScren")
+              // navigation.navigate("WelcomeScreen")
             }}/>
             </Drawer.Section>
       </View>

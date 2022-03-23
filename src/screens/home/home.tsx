@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { View, Text, Alert, TouchableOpacity,Button,Image, ScrollViewBase, ScrollView, SafeAreaView } from 'react-native';
 import styles from './home.styles'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackNavigatorParams} from '../../config/navigator'
+import {DrawerNavigatorParams} from '../../config/DrawerNavigator'
 import { LinearGradient } from 'expo-linear-gradient';
 import AddButton from '../../components/addButton/addButton'
 import { Title,Divider } from 'react-native-paper';
@@ -10,7 +10,7 @@ import FadeInOut from 'react-native-fade-in-out';
 import mongoose, { Schema } from 'mongoose';
 
 type HomeProps = {
-    navigation: NativeStackNavigationProp<StackNavigatorParams, "Home">
+    navigation: NativeStackNavigationProp<DrawerNavigatorParams, "Home">
   }
 let infoAlbum =
   {
@@ -21,7 +21,7 @@ let infoAlbum =
     "genre": "string"
   }
   
-  export default function Home(): ReactElement {
+  export default function Home({navigation}: HomeProps) {
 
   const [visible, setVisible] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
