@@ -7,7 +7,6 @@ import { Icon } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import TabNavigator from './tabNavigator';
 import Albums from '../screens/albums/albums';
 import Artists from '../screens/artists/artists';
 
@@ -16,6 +15,7 @@ export type DrawerNavigatorParams = {
   Home:undefined;
   Albums:undefined;
   Artists:undefined;
+  WelcomeScreen:undefined;
 }
 
 const Drawer = createDrawerNavigator<DrawerNavigatorParams>();
@@ -34,7 +34,7 @@ export default function Navigator(): ReactElement {
                                                 },
                                                 headerTintColor: 'black'
                                             }}>
-                            <Drawer.Screen name = "Home" component={TabNavigator} options={ {
+                            <Drawer.Screen name = "Home" component={Home} options={ {
                                title: 'Home',
                                drawerActiveTintColor:"black",
                                drawerIcon: ({focused, size}) => (
@@ -47,7 +47,7 @@ export default function Navigator(): ReactElement {
                                
                             }}/>
                             <Drawer.Screen name = "Albums" component={Albums} options={ {
-                               title: 'album',
+                               title: 'Albums',
                                drawerActiveTintColor:"black",
                                drawerIcon: ({focused, size}) => (
                                   <Icon
@@ -55,11 +55,10 @@ export default function Navigator(): ReactElement {
                                      size={size}
                                      color={focused ? '#17f832' : '#ccc'}
                                   />
-                               ),
-                               
+                               ),                               
                             }}/>
                             <Drawer.Screen name = "Artists" component={Artists} options={ {
-                               title: 'Home',
+                               title: 'Artists',
                                drawerActiveTintColor:"black",
                                drawerIcon: ({focused, size}) => (
                                   <MaterialCommunityIcons
@@ -68,7 +67,6 @@ export default function Navigator(): ReactElement {
                                      color={focused ? '#17f832' : '#ccc'}
                                   />
                                ),
-                               
                             }}/>
       </Drawer.Navigator>
     )
