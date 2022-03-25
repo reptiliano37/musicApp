@@ -66,7 +66,7 @@ const listAllAlbums = async () => {
         deathDate: "1991-11-24" })
     })
     const json = await response.json();
-    console.log(json)
+    return json
     } catch (error) {
         console.error(error);
       }
@@ -84,7 +84,7 @@ const listAllAlbums = async () => {
       },
     })
     const json = await response.json();
-    console.log(json)
+    return json
     } catch (error) {
         console.error(error);
       }

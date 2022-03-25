@@ -1,6 +1,6 @@
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styles from './artists.styles'
 import { View, Button, Text, StyleSheet } from "react-native";
 import { DrawerNavigatorParams } from "../../config/DrawerNavigator";
@@ -14,6 +14,7 @@ type ArtistsProps = {
   }
 
 export default function Artists({navigation}: ArtistsProps) {
+  const [artists, setArtists] = useState([])
   const artistCreated = useCallback(async () => {
     const response = await createArtist();
     
