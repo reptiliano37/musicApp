@@ -1,12 +1,18 @@
 import React, { ReactElement, useState } from 'react';
 import * as Network from 'expo-network';
+import { Platform } from 'react-native';
 
-// API requests are building with the local static ipV4 because expo-network doesn't return the correct IP.
-// This implementation is commented to future changes.
+// API requests are building with the my ipV4 because I am working with expo and external pyshical device.
+
+const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost';
+
+// Please, if you run this application in another external physical device put the IPv4 in the nex row and discomment it. 
+
+// const baseUrl = 'http://YOUR_IP'
 
 const createAlbum = async () => {
     
-    const urlAlbum =`http://192.168.1.48:3000/album`
+    const urlAlbum =`${baseUrl}:3000/album`
     try {
       const response = await fetch(
         urlAlbum,{
@@ -65,7 +71,8 @@ const createAlbum = async () => {
   }
 const listAllAlbums = async () => {
 
-    const urlAlbum =`http://192.168.1.48:3000/albums/all`
+    const urlAlbum =`http://192.168.1.35:3000/albums/all`
+    console.log(urlAlbum)
     try {
       const response = await fetch(
         urlAlbum,{

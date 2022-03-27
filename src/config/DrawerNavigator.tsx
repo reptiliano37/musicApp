@@ -31,10 +31,11 @@ export default function Navigator(): ReactElement {
      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}
                                           screenOptions={{
                                                 drawerStyle: {
-                                                backgroundColor: 'white',
+                                                // backgroundColor: 'black',
                                                 width: 240,
                                                 },
                                                 headerTintColor: 'black'
+                                                
                                             }}>
                             <Drawer.Screen name = "Home" component={Home} options={ {
                                title: 'Home',
@@ -51,7 +52,7 @@ export default function Navigator(): ReactElement {
                                   <Icon
                                      name="home"
                                      size={size}
-                                     color={focused ? '#17f832' : '#ccc'}
+                                     color={focused ? 'rgb(193, 244, 228)' : '#ccc'}
                                   />
                                ),
                                
@@ -70,7 +71,7 @@ export default function Navigator(): ReactElement {
                                   <Icon
                                      name="album"
                                      size={size}
-                                     color={focused ? '#17f832' : '#ccc'}
+                                     color={focused ? 'rgb(193, 244, 228)' : '#ccc'}
                                   />
                                ),                               
                             }}/>
@@ -88,7 +89,7 @@ export default function Navigator(): ReactElement {
                                   <MaterialCommunityIcons
                                      name="account-music"
                                      size={size}
-                                     color={focused ? '#17f832' : '#ccc'}
+                                     color={focused ? 'rgb(193, 244, 228)' : '#ccc'}
                                   />
                                ),
                             }}/>

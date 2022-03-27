@@ -23,18 +23,6 @@ type HomeProps = {
   const toggleModalVisible = () => {
     setModalVisible(!modalVisible);
   }
-
-  const ItemDivider = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: "100%",
-          backgroundColor: "#607D8B",
-        }}
-      />
-    );
-  }
  
   const Header = () => {
     return(

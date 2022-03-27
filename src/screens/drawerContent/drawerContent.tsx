@@ -29,6 +29,7 @@ import { DrawerNavigationState, ParamListBase } from '@react-navigation/native';
         
           <View style={styles.drawerContent}>
           <Drawer.Section style={styles.drawerSection}>
+          
             <View style={styles.userInfoSection}>
               <View style={{flexDirection:'row'}}>
                     <>
@@ -42,7 +43,7 @@ import { DrawerNavigationState, ParamListBase } from '@react-navigation/native';
             </View>
             </Drawer.Section>
             <DrawerContentScrollView {...props}>
-            <DrawerItemList {...props} />
+              <DrawerItemList {...props} />
             </DrawerContentScrollView>
         </View>
       
