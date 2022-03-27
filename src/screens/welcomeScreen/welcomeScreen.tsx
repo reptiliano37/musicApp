@@ -14,15 +14,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 type WelcomeScreenProps = {
     navigation: NativeStackNavigationProp<DrawerNavigatorParams, "WelcomeScreen">
   }
-let infoAlbum =
-  {
-    "title": "string",
-    "artistId": "string",
-    "coverUrl": "string",
-    "year": 0,
-    "genre": "string"
-  }
-  
   export default function WelcomeScreen({navigation}: WelcomeScreenProps) {
 
     const [visible, setVisible] = useState(true);

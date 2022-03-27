@@ -29,9 +29,41 @@ const createAlbum = async () => {
         console.error(error);
       }
   }
+  const deleteAlbum = async (id: string) => {
+    const urlArtist = `http://192.168.1.48:3000/album/${id}`
+    try {
+      const response = await fetch(
+        urlArtist,{
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    const json = await response.json();
+    return json
+    } catch (error) {
+        console.error(error);
+      }
+  }
+  const getAlbum = async (id: string) => {
+    const urlArtist = `http://192.168.1.48:3000/album/${id}`
+    try {
+      const response = await fetch(
+        urlArtist,{
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    const json = await response.json();
+    return json
+    } catch (error) {
+        console.error(error);
+      }
+  }
 const listAllAlbums = async () => {
-    // const ipPublicSaved = await Network.getIpAddressAsync();
-    // console.log(ipPublicSaved)
 
     const urlAlbum =`http://192.168.1.48:3000/albums/all`
     try {
@@ -72,6 +104,41 @@ const listAllAlbums = async () => {
       }
   }
 
+  const deleteArtist = async (id: string) => {
+    const urlArtist = `http://192.168.1.48:3000/artist/${id}`
+    try {
+      const response = await fetch(
+        urlArtist,{
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    const json = await response.json();
+    return json
+    } catch (error) {
+        console.error(error);
+      }
+  }
+  const getArtist = async (id: string) => {
+    const urlArtist = `http://192.168.1.48:3000/artist/${id}`
+    try {
+      const response = await fetch(
+        urlArtist,{
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    const json = await response.json();
+    return json
+    } catch (error) {
+        console.error(error);
+      }
+  }
+
   const listAllArtists = async () => {
     const urlAlbum =`http://192.168.1.48:3000/artists/all`
     try {
@@ -90,4 +157,4 @@ const listAllAlbums = async () => {
       }
   }
 
-export {createAlbum, createArtist ,listAllAlbums, listAllArtists}
+export {createAlbum, createArtist ,listAllAlbums, listAllArtists,deleteArtist}

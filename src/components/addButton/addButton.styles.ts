@@ -4,11 +4,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 50,
   },
-  buttonText: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "white",
-    textAlign: "center",
+  buttonImage: {
+    flex: 1,
+    width: 50,
+    height: 50,
+    resizeMode: "contain",
   },
 });
 

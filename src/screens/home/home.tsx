@@ -35,6 +35,7 @@ type HomeProps = {
       />
     );
   }
+ 
   const Header = () => {
     return(
       <Animatable.View 

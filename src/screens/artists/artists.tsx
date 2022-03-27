@@ -2,11 +2,12 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useCallback, useState } from "react";
 import styles from './artists.styles'
-import { View, Button, Text, StyleSheet } from "react-native";
+import { View, Button, Text, StyleSheet, SafeAreaView } from "react-native";
 import { DrawerNavigatorParams } from "../../config/DrawerNavigator";
 import { LinearGradient } from "expo-linear-gradient";
 import AddButton from "../../components/addButton/addButton";
 import { createArtist, listAllArtists } from "../../provider/apiRequests";
+import { Divider, Title } from "react-native-paper";
 
 
 type ArtistsProps = {
@@ -15,6 +16,12 @@ type ArtistsProps = {
 
 export default function Artists({navigation}: ArtistsProps) {
   const [artists, setArtists] = useState([])
+  const fetchArtists = useCallback(async () => {
+    const response = await listAllArtists();
+    // Perform all state updates.
+    console.log(response)
+  }, []);
+
   const artistCreated = useCallback(async () => {
     const response = await createArtist();
     
@@ -22,30 +29,26 @@ export default function Artists({navigation}: ArtistsProps) {
     console.log(response)
   }, []);
 
-  const Artist = () =>{
+  const Artists = () =>{
     return(
-      
-        <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',margin:20}}>
-          <Text style={{color:'black',fontStyle:'italic', fontWeight:'bold',fontSize:20, margin:20}}> Your Artists </Text>
-          <AddButton title='v' style={styles.addButtonStyle} onPress={()=>{
-            listAllArtists();
-          }}></AddButton>
-          <AddButton title='+' style={styles.addButtonStyle} onPress={()=>{
+      <SafeAreaView style={styles.container}>
+      <View style={{flexDirection:'row',flex:1}}>
+        <Title style={{color:'black',fontStyle:'italic', fontWeight:'bold', fontSize:24, marginRight:50}}> Your Artists</Title>
+        <AddButton style={styles.buttonStyle} onPress={() => {
+            fetchArtists();
+          } } source={require('../../../assets/down-chevron.png')}></AddButton>
+        <AddButton style={styles.buttonStyle} onPress={() => {
             artistCreated();
-          }}></AddButton>
-        </View>
-      
+          } } source={require('../../../assets/plus.png')}></AddButton>
+      </View>
+      <Divider style={{flex:0.05}}/>
+      </SafeAreaView>
     )
   }
   return (
-    <LinearGradient locations={[0, 0.3]} colors={['white','rgb(193, 244, 228)']} style={{flex:1}}>
-        <View style={styles.center}>
-          <Artist/>
-          {/* <Button
-            title="Go to About Screen"
-            onPress={() => navigation.navigate("About")} // We added an onPress event which would navigate to the About screen
-          /> */}
-        </View>
-    </LinearGradient>
+    <LinearGradient locations={[0, 0.3]} colors={['white','rgb(193, 244, 228)']} style={{flex:1,flexDirection:'column'}}>
+        <Artists/>
+          <View style={{ flex: 9 }} />
+      </LinearGradient>
   );
 };

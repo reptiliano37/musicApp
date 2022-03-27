@@ -1,22 +1,23 @@
-import React, { ReactElement } from "react";
-import { TouchableOpacity, TouchableOpacityProps, ActivityIndicator,Text } from "react-native";
+import React, { JSXElementConstructor, ReactElement } from "react";
+import { TouchableOpacity, TouchableOpacityProps, ActivityIndicator,Text, Image } from "react-native";
+import { ImageProps } from "react-native-elements";
 import styles from "./addButton.styles";
 // import Text from "../text/text";
 
 type ButtonProps = {
-    title: string;
+    // path:string;
     loading?: boolean;
-} & TouchableOpacityProps;
+} & TouchableOpacityProps & ImageProps;
 
-export default function AddButton({ title, style, loading, ...props }: ButtonProps): ReactElement {
-    // console.log(loading)
+export default function AddButton({ style, loading, ...props }: ButtonProps): ReactElement {
+
     return (
         
         <TouchableOpacity style={style} disabled={loading} {...props}>
             {loading ? (
                 <ActivityIndicator color="white"></ActivityIndicator>
             ) : (
-                <Text style={styles.buttonText}>{title}</Text>
+                <Image style={styles.buttonImage} {...props}/>
             )}
         </TouchableOpacity>
     );

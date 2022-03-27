@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StatusBar, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   center: {
@@ -7,16 +7,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
   },
-  addButtonStyle: {
-    backgroundColor: "rgba(0,0,0,0.2)",
-    borderWidth: 1,
-    margin: 5,
-    borderColor: "white",
+  buttonStyle: {
+    // backgroundColor: "white",
+    // borderWidth: 1,
+    borderColor: "cyan",
     borderRadius: 10,
     width: 40,
     height: 40,
     justifyContent: "center",
     alignItems: "center",
+    marginLeft: 20,
+  },
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8,
+  },
+  container: {
+    flex: 1,
+    marginTop: 20,
+    paddingTop: StatusBar.currentHeight,
+    marginHorizontal: 16,
+  },
+  header: {
+    fontSize: 32,
+    backgroundColor: "#fff",
   },
 });
 
