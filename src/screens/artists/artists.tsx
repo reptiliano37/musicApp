@@ -8,6 +8,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import AddButton from "../../components/addButton/addButton";
 import { createArtist, listAllArtists } from "../../provider/apiRequests";
 import { Caption, Divider, Title } from "react-native-paper";
+import * as Animatable from 'react-native-animatable';
+
 
 
 type ArtistsProps = {
@@ -49,22 +51,25 @@ export default function Artists({navigation}: ArtistsProps) {
     console.log(response)
   }, []);
 
-  const Item = ({ name,_id }:any) => (
+  const Item = ({ name,birthdate,deathdate }:any) => (
     <View style={styles.item}>
       <Title style={{color:'white', fontWeight:'bold'}}>{name}</Title>
-      <Caption >{_id}</Caption>
+      <Caption style={{color:'white'}}>Born: {birthdate} </Caption>
+      <Caption style={{color:'white'}}>Death: {deathdate}</Caption>
     </View>
   );
 
   const ShowListAllArtists =  () =>{
     return(
-    <SafeAreaView style={styles.container}>
+    <Animatable.View style={styles.container}
+    animation="fadeInDownBig"
+    duration={2000}>
       <FlatList
         data={listArtists}
-        renderItem={({ item }:any) => <Item key={item._id} title={item.name}/>}
+        renderItem={({ item }:any) => <Item name={item.name} birthdate={item.birthdate} deathdate={item.deathDate} />}
         keyExtractor={(item, index) => index.toString()}
       />
-    </SafeAreaView>
+    </Animatable.View>
     )
   }
 
@@ -128,10 +133,16 @@ export default function Artists({navigation}: ArtistsProps) {
       <SafeAreaView style={styles.container}>
       <View style={{flexDirection:'row',flex:1}}>
         <Title style={{color:'black',fontStyle:'italic', fontWeight:'bold', fontSize:24, marginRight:50}}> Your Artists</Title>
+        {!shouldShowList ? (
         <AddButton style={styles.buttonStyle} onPress={() => {
             fetchArtists();
             toggleList();
           } } source={require('../../../assets/down-chevron.png')}></AddButton>
+        ):(
+          <AddButton style={styles.buttonStyle} onPress={() => {
+            toggleList();
+          } } source={require('../../../assets/up-chevron.png')}></AddButton>
+        )}
         <AddButton style={styles.buttonStyle} onPress={() => {
             toggleModalVisible()
           } } source={require('../../../assets/plus.png')}></AddButton>

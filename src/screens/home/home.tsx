@@ -32,7 +32,7 @@ type HomeProps = {
         {/* <Animatable.Text animation="slideInDown" iterationCount={5} direction="alternate">Open left menu to start navigation</Animatable.Text>
         <Animatable.Text animation="pulse" easing="ease-out" iterationCount="infinite" style={{ textAlign: 'center' }}>❤️</Animatable.Text> */}
         <View style={{flex:1,marginLeft:10,flexDirection:'row', alignItems:'center',justifyContent:'center',bottom:10}}>
-          <Image source={require("../../../assets/kenjoLogo.png")} style={{width:50,height:50}}></Image>
+          <Animatable.Image animation="shake"  iterationCount="infinite" duration={4000} source={require("../../../assets/kenjoLogo.png")} style={{width:50,height:50}}></Animatable.Image>
           <Text style={{fontSize:40,fontFamily:'AppleSDGothicNeo-Bold',margin:5}}>KENJOMUSIC</Text>
           
         </View>

@@ -118,45 +118,54 @@ export default function Albums({navigation}: AlbumsProps) {
     return listAlbums
   }, []);
 
-  const Item = ({ title,_id }:any) => (
+  const Item = ({ title,year }:any) => (
     <View style={styles.item}>
       <Title style={{color:'white', fontWeight:'bold'}}>{title}</Title>
-      <Caption >{_id}</Caption>
+      <Caption style={{color:'white'}}>{year}</Caption>
     </View>
   );
   const ShowListAllAlbums =  () =>{
     return(
-    <SafeAreaView style={styles.container}>
+    <Animatable.View style={styles.container}
+    animation="fadeInDownBig"
+    duration={2000}>
       <FlatList
         data={listAlbums}
-        renderItem={({ item }:any) => <Item key={item._id} title={item.title}/>}
+        renderItem={({ item }:any) => <Item title={item.title} year={item.year}/>}
         keyExtractor={(item, index) => index.toString()}
       />
-    </SafeAreaView>
+    </Animatable.View>
     )
   }
 
   const Albums = () =>{
+    const iterationCount= 4
     return(
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={{flexDirection:'row',flex:1}}>
-            <Text style={{color:'black',fontStyle:'italic', fontWeight:'bold', fontSize:24, marginRight:50}}> Your Albums</Text>
-            <AddButton style={styles.buttonStyle} onPress={() => {
-                fetchAlbums();
-                toggleList();
-              } } source={require('../../../assets/down-chevron.png')}></AddButton>
-            <AddButton style={styles.buttonStyle} onPress={() => {
-                toggleModalVisible();
-              } } source={require('../../../assets/plus.png')}></AddButton>
-              </View>
-          <Divider style={{flex:0.05}}/>
-        </SafeAreaView>
+              <Text style={{color:'black',fontStyle:'italic', fontWeight:'bold', fontSize:24, marginRight:50}}> Your Albums</Text>
+              {!shouldShowList ? (
+              <AddButton style={styles.buttonStyle} onPress={() => {
+                  fetchAlbums();
+                  toggleList();
+                } } source={require('../../../assets/down-chevron.png')}></AddButton>
+              ):(
+                <AddButton style={styles.buttonStyle} onPress={() => {
+                  toggleList();
+                } } source={require('../../../assets/up-chevron.png')}></AddButton>
+              )}
+              <AddButton style={styles.buttonStyle} onPress={() => {
+                  toggleModalVisible();
+                } } source={require('../../../assets/plus.png')}></AddButton>
+            </View>
+            <Divider style={{flex:0.05}}/>
+        </View>
     )
   }
   return (
     
       <LinearGradient locations={[0, 0.3]} colors={['white','rgb(193, 244, 228)']} style={{flex:1,flexDirection:'column'}}>
-            <Albums/>
+          <Albums/>
           <View style={{ flex: 9 }}>
           {shouldShowList ? (
             <ShowListAllAlbums/>
