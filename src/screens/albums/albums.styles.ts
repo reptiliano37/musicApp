@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     margin: 10,
     fontStyle: "italic",
   },
+
   textInput: {
     flex: 1,
     marginTop: Platform.OS === "ios" ? 0 : -12,
@@ -28,8 +29,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   buttonStyle: {
-    // backgroundColor: "white",
-    // borderWidth: 1,
     borderRadius: 10,
     width: 30,
     height: 30,
@@ -69,6 +68,36 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 32,
     backgroundColor: "#fff",
+  },
+  picker: {
+    flexDirection: "row",
+    marginTop: 10,
+    paddingBottom: 5,
+  },
+  dropdownBtnStyle: {
+    flex: 1,
+    height: 50,
+    color: "#05375a",
+    backgroundColor: "#FFF",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#05375a",
+  },
+  dropdownDropdownStyle: {
+    backgroundColor: "#EFEFEF",
+    borderRadius: 8,
+  },
+  dropdownRowStyle: {
+    backgroundColor: "#EFEFEF",
+    borderBottomColor: "#C5C5C5",
+  },
+  dropdownRowTxtStyle: {
+    color: "#05375a",
+    textAlign: "center",
+  },
+  buttonTextPicker: {
+    color: "#05375a",
+    textAlign: "center",
   },
 });
 

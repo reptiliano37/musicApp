@@ -1,19 +1,16 @@
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from './albums.styles'
 import { View, Button, Text, StyleSheet, SafeAreaView, SectionList, FlatList, VirtualizedList, TextInput, Modal, Pressable } from "react-native";
 import { DrawerNavigatorParams } from "../../config/DrawerNavigator";
 import { LinearGradient } from "expo-linear-gradient";
 import AddButton from "../../components/addButton/addButton";
-import { createAlbum,listAllAlbums } from "../../provider/apiRequests";
+import { createAlbum,listAllAlbums, listAllArtists } from "../../provider/apiRequests";
 import { Caption, Divider, Title } from "react-native-paper";
-import { Item } from "react-native-paper/lib/typescript/components/List/List";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as Animatable from 'react-native-animatable';
-import {NetworkInfo} from 'react-native-network-info';
-import { set } from "react-native-reanimated";
-
-
+import SelectDropdown from 'react-native-select-dropdown';
 
 //<a href="https://www.flaticon.com/free-icons/down-arrow" title="down arrow icons">Down arrow icons created by Freepik - Flaticon</a>
 
@@ -23,34 +20,58 @@ type AlbumsProps = {
 
 
 export default function Albums({navigation}: AlbumsProps) {
-  // Get Local IP
-  // function saveIpPublicV4 (){
-  //   NetworkInfo.getIPV4Address().then(ipv4Address => {
-  //     console.log(ipv4Address);
-  //   });
-  // }
+
   const [modalVisible, setModalVisible] = useState(false);
   const [listAlbums, setListAlbums] = useState([]);
   const [shouldShowList, setShouldShow] = useState(false);
+  const [listArtists, setListArtists] = useState([])
 
-  const toggleModalVisible = () => {
+  const toggleModalVisible = async () => {
     setModalVisible(!modalVisible);
   }
   const toggleList = () => {
     setShouldShow(!shouldShowList);
   }
-  const [data, setData] = React.useState({
-    title: '',
-    artistId:'',
-    coverUrl: '',
-    year:parseInt(''),
-    genre:''
-    });
+  
+  const addAlbum = useCallback(async (data) => {
+    const response = await createAlbum(data);
+        console.log(response)
+  }, []);
+  const fetchAlbums = useCallback(async () => {
 
-  const setDataInput = (key: keyof typeof data, value:string) =>{
-    setData({...data,[key]: value})
-  }
+    const response = await listAllAlbums();
+    setListAlbums(response)
+
+    return listAlbums
+  }, []);
+
+  const fetchArtists = useCallback(async () => {
+    const response = await listAllArtists();
+    console.log(response)
+    let artists = []
+    response.forEach((element: { name: string; }) => {
+      artists.push(element.name)
+    });
+    setListArtists(response)
+    return listArtists
+  }, []);
+  
   const ModalContent = () =>{
+
+    const [data, setData] = React.useState({
+      title: '',
+      artistId:'',
+      coverUrl: '',
+      year:'',
+      genre:''
+      });
+    
+    const setDataInput = (key: keyof typeof data, value:string) =>{
+      setData({...data,[key]: value})
+    }
+    
+    
+    
     return(
       <SafeAreaView>
          <Divider/>
@@ -66,7 +87,7 @@ export default function Albums({navigation}: AlbumsProps) {
                 style={styles.textInput}
                 autoCapitalize="none"
                 onChangeText={(val) => 
-                    setDataInput("title",val)}
+                    {setDataInput("title",val)}}
                 
             />
           </View>
@@ -79,6 +100,7 @@ export default function Albums({navigation}: AlbumsProps) {
                     autoCapitalize="none"
                     onChangeText={(val) => 
                         setDataInput("genre",val)}
+                      
                 />
               </View>
           <Text style={styles.text_footer}>Year</Text>
@@ -88,14 +110,50 @@ export default function Albums({navigation}: AlbumsProps) {
                       style={styles.textInput}
                       placeholderTextColor={"grey"}
                       autoCapitalize="none"
+                      keyboardType="numeric"
                       onChangeText={(val) => 
                           setDataInput("year",val)}
                   />
                 </View>
+                <Text style={[styles.text_footer, {
+                        marginTop: 35
+                    }]}>Artist of album</Text>
+                <View style={styles.picker}>
+                    <SelectDropdown
+                            defaultButtonText={"Select the artist"}
+                            
+                            buttonStyle={styles.dropdownBtnStyle}
+                            buttonTextStyle={styles.buttonTextPicker}
+                            data={listAlbums}
+                            onSelect={(selectedItem, index) => 
+                                setDataInput("artistId",selectedItem)
+                            }
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                  return selectedItem
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                return item
+                            }}
+                            renderDropdownIcon={(isOpened) => {
+                                return (
+                                  <FontAwesome
+                                    name={isOpened ? "chevron-up" : "chevron-down"}
+                                    color={"#05375a"}
+                                    size={18}
+                                  />
+                                );
+                              }}
+                            dropdownStyle={styles.dropdownDropdownStyle}
+                            rowStyle={styles.dropdownRowStyle}
+                            rowTextStyle={styles.dropdownRowTxtStyle}
+                            
+                        />
+                </View>
        <Pressable
             style={[styles.buttonModal]}
             onPress={() => {
-              toggleModalVisible()
+              toggleModalVisible();
+              addAlbum(data)
             }}
           >
       <LinearGradient style={[styles.buttonModal]} colors={['rgb(193, 244, 228)','rgb(193, 224, 288)']} >
@@ -105,18 +163,6 @@ export default function Albums({navigation}: AlbumsProps) {
       </SafeAreaView>
     )
   }
-
-  const albumCreated = useCallback(async () => {
-    const response = await createAlbum();
-        console.log(response)
-  }, []);
-  const fetchAlbums = useCallback(async () => {
-
-    const response = await listAllAlbums();
-    setListAlbums(response)
-
-    return listAlbums
-  }, []);
 
   const Item = ({ title,year }:any) => (
     <View style={styles.item}>
@@ -139,7 +185,6 @@ export default function Albums({navigation}: AlbumsProps) {
   }
 
   const Albums = () =>{
-    const iterationCount= 4
     return(
         <View style={styles.container}>
             <View style={{flexDirection:'row',flex:1}}>
@@ -155,6 +200,7 @@ export default function Albums({navigation}: AlbumsProps) {
                 } } source={require('../../../assets/up-chevron.png')}></AddButton>
               )}
               <AddButton style={styles.buttonStyle} onPress={() => {
+                  fetchArtists();
                   toggleModalVisible();
                 } } source={require('../../../assets/plus.png')}></AddButton>
             </View>

@@ -17,6 +17,7 @@ type ArtistsProps = {
   }
 
 export default function Artists({navigation}: ArtistsProps) {
+
   const [listArtists, setListArtists] = useState([])
   const [modalVisible, setModalVisible] = useState(false);
   const [shouldShowList, setShouldShow] = useState(false);
@@ -27,16 +28,6 @@ export default function Artists({navigation}: ArtistsProps) {
   const toggleList = () => {
     setShouldShow(!shouldShowList);
   }
-  const [data, setData] = React.useState({
-    name: '',
-    birthdate:'',
-    deathdate:'',
-    photoUrl:'',
-    });
-
-  const setDataInput = (key: keyof typeof data, value:string) =>{
-    setData({...data,[key]: value})
-  }
 
   const fetchArtists = useCallback(async () => {
     const response = await listAllArtists();
@@ -45,8 +36,8 @@ export default function Artists({navigation}: ArtistsProps) {
     return listArtists
   }, []);
 
-  const artistCreated = useCallback(async () => {
-    const response = await createArtist();
+  const addArtist = useCallback(async (data) => {
+    const response = await createArtist(data);
     
     console.log(response)
   }, []);
@@ -74,6 +65,18 @@ export default function Artists({navigation}: ArtistsProps) {
   }
 
   const ModalContent = () =>{
+
+    const [data, setData] = React.useState({
+      name: '',
+      birthdate:'',
+      deathDate:'',
+      photoUrl:'',
+      });
+  
+    const setDataInput = (key: keyof typeof data, value:string) =>{
+        setData({...data,[key]: value})
+    }
+    
     return(
       <SafeAreaView>
          <Divider/>
@@ -81,6 +84,7 @@ export default function Artists({navigation}: ArtistsProps) {
                   <Title style={{color:'rgb(193, 244, 228)',fontWeight:'bold' }}>Create an artist</Title>
               </View>
           <Divider/>
+        <>
         <Text style={styles.text_footer}>Name</Text>
         <View style={styles.action}>
             <TextInput 
@@ -89,7 +93,8 @@ export default function Artists({navigation}: ArtistsProps) {
                 style={styles.textInput}
                 autoCapitalize="none"
                 onChangeText={(val) => 
-                    setDataInput("name",val)}
+                    {setDataInput("name",val);
+                }}
             />
           </View>
           <Text style={styles.text_footer}>Birthdate</Text>
@@ -111,18 +116,22 @@ export default function Artists({navigation}: ArtistsProps) {
                       placeholderTextColor={"grey"}
                       autoCapitalize="none"
                       onChangeText={(val) => 
-                          setDataInput("deathdate",val)}
+                          setDataInput("deathDate",val)}
                   />
                 </View>
+                </>
+                
        <Pressable
             style={[styles.buttonModal]}
             onPress={() => {
-              toggleModalVisible()
+              toggleModalVisible();
+              // console.log(data)
+              addArtist(data)
             }}
           >
-      <LinearGradient style={[styles.buttonModal]} colors={['rgb(193, 244, 228)','rgb(193, 224, 288)']} >
-        <Text style={[styles.textStyleButtonModal]}>Ready</Text>
-      </LinearGradient>
+        <LinearGradient style={[styles.buttonModal]} colors={['rgb(193, 244, 228)','rgb(193, 224, 288)']} >
+          <Text style={[styles.textStyleButtonModal]}>Ready</Text>
+        </LinearGradient>
       </Pressable> 
       </SafeAreaView>
     )

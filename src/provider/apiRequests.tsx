@@ -4,14 +4,16 @@ import { Platform } from 'react-native';
 
 // API requests are building with the my ipV4 because I am working with expo and external pyshical device.
 
-// Please, if you run this application in another external physical device put the IPv4 in the next row and discomment it. 
+// Please, if you run this application in another external physical device put the IPv4 in the next row and discomment it.
 
 // const baseUrl = 'http://YOUR_IP'
 
-const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost';
+const baseUrl = "http://192.168.1.35"
 
-const createAlbum = async () => {
-    
+//const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost';
+
+const createAlbum = async (infoAlbum: Object) => {
+    console.log(infoAlbum)
     const urlAlbum =`${baseUrl}:3000/album`
     try {
       const response = await fetch(
@@ -21,12 +23,7 @@ const createAlbum = async () => {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        title: "Los Carmenes",
-        artistId: "6238bdebc38eb300132e0043",
-        coverUrl: "www.url.com",
-        year: 1936,
-        genre: "pop" })
+      body: JSON.stringify(infoAlbum)
         
     })
     const json = await response.json();
@@ -36,7 +33,7 @@ const createAlbum = async () => {
       }
   }
   const deleteAlbum = async (id: string) => {
-    const urlArtist = `http://192.168.1.35:3000/album/${id}`
+    const urlArtist = `${baseUrl}:3000/album/${id}`
     try {
       const response = await fetch(
         urlArtist,{
@@ -53,7 +50,7 @@ const createAlbum = async () => {
       }
   }
   const getAlbum = async (id: string) => {
-    const urlArtist = `http://192.168.1.35:3000/album/${id}`
+    const urlArtist = `${baseUrl}:3000/album/${id}`
     try {
       const response = await fetch(
         urlArtist,{
@@ -71,7 +68,7 @@ const createAlbum = async () => {
   }
 const listAllAlbums = async () =>  {
 
-    const urlAlbum =`http://192.168.1.35:3000/albums/all`
+    const urlAlbum =`${baseUrl}:3000/albums/all`
     console.log(urlAlbum)
     try {
       const response = await fetch(
@@ -89,8 +86,8 @@ const listAllAlbums = async () =>  {
         console.error(error);
       }
   }
-  const createArtist = async () => {
-    const urlArtist = "http://192.168.1.35:3000/artist"
+  const createArtist = async (infoArtist: Object) => {
+    const urlArtist = `${baseUrl}:3000/artist`
     try {
       const response = await fetch(
         urlArtist,{
@@ -99,11 +96,7 @@ const listAllAlbums = async () =>  {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        name: "Freddie Mercury",
-        photoUrl: "string",
-        birthdate: "1946-09-05",
-        deathDate: "1991-11-24" })
+      body: JSON.stringify(infoArtist)
     })
     const json = await response.json();
     return json
@@ -113,7 +106,7 @@ const listAllAlbums = async () =>  {
   }
 
   const deleteArtist = async (id: string) => {
-    const urlArtist = `http://192.168.1.35:3000/artist/${id}`
+    const urlArtist = `${baseUrl}:3000/artist/${id}`
     try {
       const response = await fetch(
         urlArtist,{
@@ -130,7 +123,7 @@ const listAllAlbums = async () =>  {
       }
   }
   const getArtist = async (id: string) => {
-    const urlArtist = `http://192.168.1.35:3000/artist/${id}`
+    const urlArtist = `${baseUrl}:3000/artist/${id}`
     try {
       const response = await fetch(
         urlArtist,{
@@ -148,7 +141,7 @@ const listAllAlbums = async () =>  {
   }
 
   const listAllArtists = async () => {
-    const urlAlbum =`http://192.168.1.35:3000/artists/all`
+    const urlAlbum =`${baseUrl}:3000/artists/all`
     try {
       const response = await fetch(
         urlAlbum,{
