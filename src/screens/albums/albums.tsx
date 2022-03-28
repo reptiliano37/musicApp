@@ -7,7 +7,7 @@ import { DrawerNavigatorParams } from "../../config/DrawerNavigator";
 import { LinearGradient } from "expo-linear-gradient";
 import AddButton from "../../components/addButton/addButton";
 import { createAlbum,listAllAlbums } from "../../provider/apiRequests";
-import { Divider, Title } from "react-native-paper";
+import { Caption, Divider, Title } from "react-native-paper";
 import { Item } from "react-native-paper/lib/typescript/components/List/List";
 import * as Animatable from 'react-native-animatable';
 import {NetworkInfo} from 'react-native-network-info';
@@ -30,19 +30,25 @@ export default function Albums({navigation}: AlbumsProps) {
   //   });
   // }
   const [modalVisible, setModalVisible] = useState(false);
+  const [listAlbums, setListAlbums] = useState([]);
+  const [shouldShowList, setShouldShow] = useState(false);
+
   const toggleModalVisible = () => {
     setModalVisible(!modalVisible);
   }
+  const toggleList = () => {
+    setShouldShow(!shouldShowList);
+  }
+  const [data, setData] = React.useState({
+    title: '',
+    artistId:'',
+    coverUrl: '',
+    year:parseInt(''),
+    genre:''
+    });
 
-  interface infoAlbum {
-    _createdAt: string;
-    _id: string;
-    _updatedAt: string;
-    artistId: string;
-    coverUrl: string;
-    genre: string;
-    title: string;
-    year: number;
+  const setDataInput = (key: keyof typeof data, value:string) =>{
+    setData({...data,[key]: value})
   }
   const ModalContent = () =>{
     return(
@@ -59,10 +65,9 @@ export default function Albums({navigation}: AlbumsProps) {
                 placeholderTextColor={"grey"}
                 style={styles.textInput}
                 autoCapitalize="none"
-                // onChangeText={(val) => 
-                //    {textInputChange(val);
-                //     setDataInput("username",val)}
-                // }
+                onChangeText={(val) => 
+                    setDataInput("title",val)}
+                
             />
           </View>
           <Text style={styles.text_footer}>Genre</Text>
@@ -72,10 +77,8 @@ export default function Albums({navigation}: AlbumsProps) {
                     style={styles.textInput}
                     placeholderTextColor={"grey"}
                     autoCapitalize="none"
-                    // onChangeText={(val) => 
-                    //    {textInputChange(val);
-                    //     setDataInput("username",val)}
-                    // }
+                    onChangeText={(val) => 
+                        setDataInput("genre",val)}
                 />
               </View>
           <Text style={styles.text_footer}>Year</Text>
@@ -85,17 +88,14 @@ export default function Albums({navigation}: AlbumsProps) {
                       style={styles.textInput}
                       placeholderTextColor={"grey"}
                       autoCapitalize="none"
-                      // onChangeText={(val) => 
-                      //    {textInputChange(val);
-                      //     setDataInput("username",val)}
-                      // }
+                      onChangeText={(val) => 
+                          setDataInput("year",val)}
                   />
                 </View>
        <Pressable
             style={[styles.buttonModal]}
             onPress={() => {
               toggleModalVisible()
-              // startTraining(selected);
             }}
           >
       <LinearGradient style={[styles.buttonModal]} colors={['rgb(193, 244, 228)','rgb(193, 224, 288)']} >
@@ -108,31 +108,29 @@ export default function Albums({navigation}: AlbumsProps) {
 
   const albumCreated = useCallback(async () => {
     const response = await createAlbum();
-    
-    // Perform all state updates.
-    console.log(response)
+        console.log(response)
   }, []);
   const fetchAlbums = useCallback(async () => {
 
     const response = await listAllAlbums();
-    console.log(response)
-    return response
-    // Perform all state updates.
+    setListAlbums(response)
+
+    return listAlbums
   }, []);
 
-  const Item = ({ title }:any) => (
+  const Item = ({ title,_id }:any) => (
     <View style={styles.item}>
-      <Text >{title}</Text>
+      <Title style={{color:'white', fontWeight:'bold'}}>{title}</Title>
+      <Caption >{_id}</Caption>
     </View>
   );
-  const showListAllAlbums = () =>{
-
+  const ShowListAllAlbums =  () =>{
     return(
     <SafeAreaView style={styles.container}>
-      <VirtualizedList
-        data={fetchAlbums()}
-        initialNumToRender={4}
-        renderItem={({ item }:any) => <Item title={item.title} />}
+      <FlatList
+        data={listAlbums}
+        renderItem={({ item }:any) => <Item key={item._id} title={item.title}/>}
+        keyExtractor={(item, index) => index.toString()}
       />
     </SafeAreaView>
     )
@@ -145,7 +143,7 @@ export default function Albums({navigation}: AlbumsProps) {
             <Text style={{color:'black',fontStyle:'italic', fontWeight:'bold', fontSize:24, marginRight:50}}> Your Albums</Text>
             <AddButton style={styles.buttonStyle} onPress={() => {
                 fetchAlbums();
-
+                toggleList();
               } } source={require('../../../assets/down-chevron.png')}></AddButton>
             <AddButton style={styles.buttonStyle} onPress={() => {
                 toggleModalVisible();
@@ -159,9 +157,14 @@ export default function Albums({navigation}: AlbumsProps) {
     
       <LinearGradient locations={[0, 0.3]} colors={['white','rgb(193, 244, 228)']} style={{flex:1,flexDirection:'column'}}>
             <Albums/>
-          <View style={{ flex: 9 }}/>
+          <View style={{ flex: 9 }}>
+          {shouldShowList ? (
+            <ShowListAllAlbums/>
+          ) : null}
+          </View>
+
             <Modal
-                style={{ flex: 9 }}
+                style={{margin:0,flex:1}}
                 animationType="slide"
                 visible={modalVisible}
               >

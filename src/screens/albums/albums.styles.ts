@@ -53,7 +53,10 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    backgroundColor: "#f9c2ff",
+    backgroundColor: "black",
+    borderWidth: 4,
+    borderColor: "#18df18",
+    borderRadius: 30,
     padding: 20,
     marginVertical: 8,
   },

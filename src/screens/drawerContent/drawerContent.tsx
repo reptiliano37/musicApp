@@ -22,6 +22,7 @@ import WelcomeScreen from '../welcomeScreen/welcomeScreen';
 import { DrawerNavigationHelpers, DrawerDescriptorMap } from '@react-navigation/drawer/lib/typescript/src/types';
 import { DrawerNavigationState, ParamListBase } from '@react-navigation/native';
 
+
  export default function CustomDrawerContent(props: any) {
     const [signingOut, setSigningOut] = useState(false);
     return (

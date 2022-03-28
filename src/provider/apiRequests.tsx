@@ -4,11 +4,11 @@ import { Platform } from 'react-native';
 
 // API requests are building with the my ipV4 because I am working with expo and external pyshical device.
 
-const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost';
-
-// Please, if you run this application in another external physical device put the IPv4 in the nex row and discomment it. 
+// Please, if you run this application in another external physical device put the IPv4 in the next row and discomment it. 
 
 // const baseUrl = 'http://YOUR_IP'
+
+const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost';
 
 const createAlbum = async () => {
     
@@ -36,7 +36,7 @@ const createAlbum = async () => {
       }
   }
   const deleteAlbum = async (id: string) => {
-    const urlArtist = `http://192.168.1.48:3000/album/${id}`
+    const urlArtist = `http://192.168.1.35:3000/album/${id}`
     try {
       const response = await fetch(
         urlArtist,{
@@ -53,7 +53,7 @@ const createAlbum = async () => {
       }
   }
   const getAlbum = async (id: string) => {
-    const urlArtist = `http://192.168.1.48:3000/album/${id}`
+    const urlArtist = `http://192.168.1.35:3000/album/${id}`
     try {
       const response = await fetch(
         urlArtist,{
@@ -69,7 +69,7 @@ const createAlbum = async () => {
         console.error(error);
       }
   }
-const listAllAlbums = async () => {
+const listAllAlbums = async () =>  {
 
     const urlAlbum =`http://192.168.1.35:3000/albums/all`
     console.log(urlAlbum)
@@ -84,12 +84,13 @@ const listAllAlbums = async () => {
     })
     const json = await response.json();
     console.log(json)
+    return json
     } catch (error) {
         console.error(error);
       }
   }
   const createArtist = async () => {
-    const urlArtist = "http://192.168.1.48:3000/artist"
+    const urlArtist = "http://192.168.1.35:3000/artist"
     try {
       const response = await fetch(
         urlArtist,{
@@ -112,7 +113,7 @@ const listAllAlbums = async () => {
   }
 
   const deleteArtist = async (id: string) => {
-    const urlArtist = `http://192.168.1.48:3000/artist/${id}`
+    const urlArtist = `http://192.168.1.35:3000/artist/${id}`
     try {
       const response = await fetch(
         urlArtist,{
@@ -129,7 +130,7 @@ const listAllAlbums = async () => {
       }
   }
   const getArtist = async (id: string) => {
-    const urlArtist = `http://192.168.1.48:3000/artist/${id}`
+    const urlArtist = `http://192.168.1.35:3000/artist/${id}`
     try {
       const response = await fetch(
         urlArtist,{
@@ -147,7 +148,7 @@ const listAllAlbums = async () => {
   }
 
   const listAllArtists = async () => {
-    const urlAlbum =`http://192.168.1.48:3000/artists/all`
+    const urlAlbum =`http://192.168.1.35:3000/artists/all`
     try {
       const response = await fetch(
         urlAlbum,{
@@ -164,4 +165,4 @@ const listAllAlbums = async () => {
       }
   }
 
-export {createAlbum, createArtist ,listAllAlbums, listAllArtists,deleteArtist}
+export {createAlbum, createArtist ,listAllAlbums, listAllArtists,deleteArtist,deleteAlbum, getAlbum,getArtist}
