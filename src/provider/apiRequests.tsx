@@ -8,7 +8,7 @@ import { Platform } from 'react-native';
 
 // const baseUrl = 'http://YOUR_IP'
 
-const baseUrl = "http://192.168.1.35"
+const baseUrl = "http://192.168.1.35" // Comment this line when technical worker check my challenge.
 
 //const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost';
 

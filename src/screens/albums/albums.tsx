@@ -24,7 +24,7 @@ export default function Albums({navigation}: AlbumsProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const [listAlbums, setListAlbums] = useState([]);
   const [shouldShowList, setShouldShow] = useState(false);
-  const [listArtists, setListArtists] = useState([])
+  const [listArtists, setListArtists] = useState([]);
 
   const toggleModalVisible = async () => {
     setModalVisible(!modalVisible);
@@ -47,12 +47,9 @@ export default function Albums({navigation}: AlbumsProps) {
 
   const fetchArtists = useCallback(async () => {
     const response = await listAllArtists();
-    console.log(response)
-    let artists = []
-    response.forEach((element: { name: string; }) => {
-      artists.push(element.name)
-    });
+    
     setListArtists(response)
+    console.log(listArtists)
     return listArtists
   }, []);
   
@@ -69,9 +66,7 @@ export default function Albums({navigation}: AlbumsProps) {
     const setDataInput = (key: keyof typeof data, value:string) =>{
       setData({...data,[key]: value})
     }
-    
-    
-    
+
     return(
       <SafeAreaView>
          <Divider/>
@@ -119,20 +114,21 @@ export default function Albums({navigation}: AlbumsProps) {
                         marginTop: 35
                     }]}>Artist of album</Text>
                 <View style={styles.picker}>
+
+                    {listArtists && 
                     <SelectDropdown
                             defaultButtonText={"Select the artist"}
-                            
                             buttonStyle={styles.dropdownBtnStyle}
                             buttonTextStyle={styles.buttonTextPicker}
-                            data={listAlbums}
-                            onSelect={(selectedItem, index) => 
-                                setDataInput("artistId",selectedItem)
+                            data={listArtists}
+                            onSelect={(selectedItem, _index) => 
+                                setDataInput("artistId",selectedItem["_id"])
                             }
-                            buttonTextAfterSelection={(selectedItem, index) => {
-                                  return selectedItem
+                            buttonTextAfterSelection={(selectedItem, _index) => {
+                                  return selectedItem["name"]
                             }}
-                            rowTextForSelection={(item, index) => {
-                                return item
+                            rowTextForSelection={(item, _index) => {
+                                return item["name"]
                             }}
                             renderDropdownIcon={(isOpened) => {
                                 return (
@@ -148,6 +144,7 @@ export default function Albums({navigation}: AlbumsProps) {
                             rowTextStyle={styles.dropdownRowTxtStyle}
                             
                         />
+                            }
                 </View>
        <Pressable
             style={[styles.buttonModal]}
@@ -178,7 +175,7 @@ export default function Albums({navigation}: AlbumsProps) {
       <FlatList
         data={listAlbums}
         renderItem={({ item }:any) => <Item title={item.title} year={item.year}/>}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_item, index) => index.toString()}
       />
     </Animatable.View>
     )
